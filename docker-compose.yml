@@ -1,0 +1,23 @@
+version: '3'
+services:
+  sv_nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - sv_mysql
+    networks:
+      - homework-network
+    command: /bin/bash -c "apt-get update && apt-get install -y default-mysql-client && nginx -g 'daemon off;'"
+  sv_mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rebecam
+      MYSQL_DATABASE: database-homework
+      MYSQL_PASSWORD: rebecam
+    networks:
+      - homework-network
+
+networks:
+  homework-network:
+    driver: bridge
